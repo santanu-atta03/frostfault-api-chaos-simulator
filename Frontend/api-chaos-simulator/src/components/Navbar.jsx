@@ -14,19 +14,19 @@ export default function Navbar() {
   ];
   
   return (
-    <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 shadow-xl">
+    <nav className="bg-linear-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 shadow-xl">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="absolute inset-0 bg-purple-500 blur-lg opacity-50 rounded-full"></div>
-              <div className="relative bg-gradient-to-br from-purple-500 to-pink-500 p-2 rounded-lg">
+              <div className="relative bg-linear-to-br from-purple-500 to-pink-500 p-2 rounded-lg">
                 <Zap className="w-6 h-6 text-white" strokeWidth={2.5} />
               </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 API Chaos
               </h1>
               <p className="text-xs text-slate-400">Engineering Simulator</p>

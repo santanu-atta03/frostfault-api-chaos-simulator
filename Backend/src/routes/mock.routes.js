@@ -28,4 +28,9 @@ router.put("/:id", updateMockApi);
 // IMPORT
 router.post("/import", importMockApi);
 
+router.delete("/:id", async (req, res) => {
+  await MockApi.findByIdAndDelete(req.params.id);
+  res.json({ message: "Mock API deleted" });
+});
+
 module.exports = router;

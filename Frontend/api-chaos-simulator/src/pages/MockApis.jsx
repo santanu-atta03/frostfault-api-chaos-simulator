@@ -6,20 +6,45 @@ export default function MockApis() {
   const [apis, setApis] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchApis = async () => {
-      try {
-        const res = await api.get("/api/mock");
-        setApis(res.data);
-      } catch (err) {
-        console.error("Failed to load mock APIs", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Fetch APIs
+  const fetchApis = async () => {
+    try {
+      const res = await api.get("/api/mock");
+      setApis(res.data);
+    } catch (err) {
+      console.error("Failed to load mock APIs", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchApis();
   }, []);
+
+  // ✅ COPY MOCK API URL
+  const handleCopy = (apiData) => {
+    const url = `http://localhost:5000/mock${apiData.endpoint}`;
+    navigator.clipboard.writeText(url);
+    alert("Mock API URL copied!");
+  };
+
+  // ✅ DELETE MOCK API
+  const handleDelete = async (apiData) => {
+    const confirmDelete = window.confirm(
+      `Delete mock API "${apiData.name}"?`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await api.delete(`/api/mock/${apiData._id}`);
+      alert("Mock API deleted");
+      fetchApis(); // refresh list
+    } catch (err) {
+      alert("Failed to delete mock API");
+    }
+  };
 
   if (loading) {
     return <div className="p-6">Loading mock APIs...</div>;
@@ -33,11 +58,17 @@ export default function MockApis() {
         <p>No mock APIs created yet.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {apis.map(api => (
-            <MockApiCard key={api._id} api={api} />
+          {apis.map(apiItem => (
+            <MockApiCard
+              key={apiItem._id}
+              api={apiItem}
+              onCopy={handleCopy}     // ✅ PASS COPY HANDLER
+              onDelete={handleDelete} // ✅ PASS DELETE HANDLER
+            />
           ))}
         </div>
       )}
     </div>
   );
 }
+

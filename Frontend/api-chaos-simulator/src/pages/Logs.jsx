@@ -62,19 +62,19 @@ export default function Logs() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="relative">
               <div className="absolute inset-0 bg-blue-500 blur-xl opacity-50"></div>
-              <div className="relative bg-gradient-to-br from-blue-500 to-cyan-500 p-3 rounded-xl">
+              <div className="relative bg-linear-to-br from-blue-500 to-cyan-500 p-3 rounded-xl">
                 <FileText className="w-8 h-8 text-white" strokeWidth={2.5} />
               </div>
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Request Logs
               </h1>
               <p className="text-slate-400 mt-1">Monitor all API requests and responses</p>
@@ -82,7 +82,7 @@ export default function Logs() {
           </div>
 
           {/* Filters */}
-          <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-linear-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl p-4">
             <div className="flex flex-col md:flex-row gap-4">
               {/* Search */}
               <div className="flex-1 relative">
@@ -124,7 +124,7 @@ export default function Logs() {
         </div>
 
         {/* Logs Table */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl overflow-hidden">
+        <div className="bg-linear-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="flex flex-col items-center gap-4">
@@ -201,7 +201,7 @@ export default function Logs() {
 
         {/* Pagination */}
         {!loading && filteredLogs.length > 0 && (
-          <div className="mt-6 flex items-center justify-between bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl p-4">
+          <div className="mt-6 flex items-center justify-between bg-linear-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl p-4">
             <div className="text-sm text-slate-400">
               Showing page <span className="text-white font-semibold">{page}</span>
             </div>

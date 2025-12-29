@@ -97,3 +97,14 @@ exports.getLogs = async (req, res) => {
 
   res.json(logs);
 };
+
+
+exports.deleteMockApi = async (req, res) => {
+  const deleted = await MockApi.findByIdAndDelete(req.params.id);
+
+  if (!deleted) {
+    return res.status(404).json({ error: "Mock API not found" });
+  }
+
+  res.json({ message: "Mock API deleted" });
+};
