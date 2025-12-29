@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://frostfault-api-chaos-simulator-sujk.vercel.app",
   headers: {
     "Content-Type": "application/json"
   }
