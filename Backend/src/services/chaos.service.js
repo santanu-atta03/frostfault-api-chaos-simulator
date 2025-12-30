@@ -1,29 +1,31 @@
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 exports.applyChaos = async (chaosConfig) => {
-  // 1. Latency injection
+  // 1. Latency injection - ALWAYS applied if configured
   if (chaosConfig.latency?.max > 0) {
     const delay =
       Math.floor(
-        Math.random() *
-          (chaosConfig.latency.max - chaosConfig.latency.min + 1)
+        Math.random() * (chaosConfig.latency.max - chaosConfig.latency.min + 1)
       ) + chaosConfig.latency.min;
 
     await sleep(delay);
   }
 
-  // 2. Error injection
-  if (Math.random() < chaosConfig.errorProbability) {
+  // 2. Malformed response - check BEFORE error injection
+  if (chaosConfig.malformedResponse && Math.random() < 0.5) {
     return {
-      type: "ERROR",
-      statusCode: chaosConfig.errorStatusCode || 500
+      type: "MALFORMED",
     };
   }
 
-  // 3. Malformed response
-  if (chaosConfig.malformedResponse) {
+  // 3. Error injection - probabilistic
+  if (
+    chaosConfig.errorProbability > 0 &&
+    Math.random() < chaosConfig.errorProbability
+  ) {
     return {
-      type: "MALFORMED"
+      type: "ERROR",
+      statusCode: chaosConfig.errorStatusCode || 500,
     };
   }
 
