@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import MockApis from "./pages/MockApis";
 import CreateMockApi from "./pages/CreateMockApi";
 import Logs from "./pages/Logs";
+import CreateGraphqlMock from "./pages/CreateGraphqlMock";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/mock-apis" element={<MockApis />} />
         <Route path="/create" element={<CreateMockApi />} />
         <Route path="/logs" element={<Logs />} />
+
+        <Route path="/mock/create-graphql" element={<CreateGraphqlMock />} />
       </Routes>
     </BrowserRouter>
   );

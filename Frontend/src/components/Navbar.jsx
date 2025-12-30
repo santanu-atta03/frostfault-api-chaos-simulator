@@ -6,12 +6,19 @@ export default function Navbar() {
   
   const isActive = (path) => location.pathname === path;
   
-  const navItems = [
-    { path: "/", label: "Dashboard", icon: Activity },
-    { path: "/mock-apis", label: "Mock APIs", icon: Layers },
-    { path: "/create", label: "Create API", icon: Plus },
-    { path: "/logs", label: "Logs", icon: FileText }
-  ];
+ const navItems = [
+  { path: "/", label: "Dashboard", icon: Activity },
+  { path: "/mock-apis", label: "Mock APIs", icon: Layers },
+
+  // REST
+  { path: "/create", label: "Create REST", icon: Plus },
+
+  // GRAPHQL
+  { path: "/mock/create-graphql", label: "Create GraphQL", icon: Zap },
+
+  { path: "/logs", label: "Logs", icon: FileText }
+];
+
   
   return (
     <nav className="bg-linear-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 shadow-xl">
