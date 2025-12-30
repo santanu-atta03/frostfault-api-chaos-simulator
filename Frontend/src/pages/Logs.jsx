@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
-import { FileText, Filter, ChevronLeft, ChevronRight, Clock, Activity, AlertCircle, CheckCircle2, Search } from "lucide-react";
+import {
+  FileText,
+  Filter,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Activity,
+  AlertCircle,
+  CheckCircle2,
+  Search,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export default function Logs() {
@@ -29,14 +39,16 @@ export default function Logs() {
     fetchLogs();
   }, [page]);
 
-  const filteredLogs = logs.filter(log => {
-    const matchesSearch = log.endpoint.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         log.method.toLowerCase().includes(searchTerm.toLowerCase());
-    
+  const filteredLogs = logs.filter((log) => {
+    const matchesSearch =
+      log.endpoint.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.method.toLowerCase().includes(searchTerm.toLowerCase());
+
     if (statusFilter === "all") return matchesSearch;
-    if (statusFilter === "success") return matchesSearch && log.statusCode < 400;
+    if (statusFilter === "success")
+      return matchesSearch && log.statusCode < 400;
     if (statusFilter === "error") return matchesSearch && log.statusCode >= 400;
-    
+
     return matchesSearch;
   });
 
@@ -45,7 +57,7 @@ export default function Logs() {
     POST: "bg-blue-500/10 text-blue-400 border-blue-500/30",
     PUT: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
     DELETE: "bg-red-500/10 text-red-400 border-red-500/30",
-    PATCH: "bg-purple-500/10 text-purple-400 border-purple-500/30"
+    PATCH: "bg-purple-500/10 text-purple-400 border-purple-500/30",
   };
 
   const getStatusColor = (status) => {
@@ -60,6 +72,10 @@ export default function Logs() {
     if (latency > 500) return "text-yellow-400";
     return "text-green-400";
   };
+
+  const TIMEOUT_THRESHOLD = 3000;
+
+  const isTimeout = (latency) => latency > TIMEOUT_THRESHOLD;
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
@@ -77,7 +93,9 @@ export default function Logs() {
               <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Request Logs
               </h1>
-              <p className="text-slate-400 mt-1">Monitor all API requests and responses</p>
+              <p className="text-slate-400 mt-1">
+                Monitor all API requests and responses
+              </p>
             </div>
           </div>
 
@@ -102,7 +120,7 @@ export default function Logs() {
                   {[
                     { value: "all", label: "All", icon: Activity },
                     { value: "success", label: "Success", icon: CheckCircle2 },
-                    { value: "error", label: "Errors", icon: AlertCircle }
+                    { value: "error", label: "Errors", icon: AlertCircle },
                   ].map(({ value, label, icon: Icon }) => (
                     <button
                       key={value}
@@ -137,7 +155,9 @@ export default function Logs() {
               <div className="text-center">
                 <FileText className="w-16 h-16 text-slate-600 mx-auto mb-4" />
                 <p className="text-slate-400 text-lg">No logs found</p>
-                <p className="text-slate-500 text-sm mt-1">Try adjusting your filters</p>
+                <p className="text-slate-500 text-sm mt-1">
+                  Try adjusting your filters
+                </p>
               </div>
             </div>
           ) : (
@@ -145,19 +165,32 @@ export default function Logs() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-slate-700/50 bg-slate-900/50">
-                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">Endpoint</th>
-                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">Method</th>
-                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">Status</th>
-                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">Latency</th>
-                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">Timestamp</th>
+                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">
+                      Endpoint
+                    </th>
+                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">
+                      Method
+                    </th>
+                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">
+                      Status
+                    </th>
+                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">
+                      Latency
+                    </th>
+                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">
+                      Timestamp
+                    </th>
+                    <th className="text-left p-4 text-slate-300 font-semibold text-sm">
+                      Timeout
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredLogs.map((log, index) => (
-                    <tr 
-                      key={log._id} 
+                    <tr
+                      key={log._id}
                       className={`border-b border-slate-700/30 hover:bg-slate-800/50 transition-colors ${
-                        index % 2 === 0 ? 'bg-slate-900/20' : ''
+                        index % 2 === 0 ? "bg-slate-900/20" : ""
                       }`}
                     >
                       <td className="p-4">
@@ -166,12 +199,21 @@ export default function Logs() {
                         </code>
                       </td>
                       <td className="p-4">
-                        <span className={`inline-flex items-center px-3 py-1 rounded-lg border text-xs font-semibold ${methodColors[log.method] || "bg-slate-500/10 text-slate-400 border-slate-500/30"}`}>
+                        <span
+                          className={`inline-flex items-center px-3 py-1 rounded-lg border text-xs font-semibold ${
+                            methodColors[log.method] ||
+                            "bg-slate-500/10 text-slate-400 border-slate-500/30"
+                          }`}
+                        >
                           {log.method}
                         </span>
                       </td>
                       <td className="p-4">
-                        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg text-sm font-bold ${getStatusColor(log.statusCode)}`}>
+                        <span
+                          className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg text-sm font-bold ${getStatusColor(
+                            log.statusCode
+                          )}`}
+                        >
                           {log.statusCode >= 400 ? (
                             <AlertCircle className="w-3.5 h-3.5" />
                           ) : (
@@ -181,7 +223,11 @@ export default function Logs() {
                         </span>
                       </td>
                       <td className="p-4">
-                        <span className={`flex items-center gap-2 text-sm font-semibold ${getLatencyColor(log.latency)}`}>
+                        <span
+                          className={`flex items-center gap-2 text-sm font-semibold ${getLatencyColor(
+                            log.latency
+                          )}`}
+                        >
                           <Clock className="w-4 h-4" />
                           {log.latency}ms
                         </span>
@@ -190,6 +236,19 @@ export default function Logs() {
                         <span className="text-sm text-slate-400">
                           {new Date(log.createdAt).toLocaleString()}
                         </span>
+                      </td>
+                      <td className="p-4">
+                        {isTimeout(log.latency) ? (
+                          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-lg text-sm font-bold text-red-400 bg-red-500/10">
+                            <AlertCircle className="w-4 h-4" />
+                            YES
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-lg text-sm font-bold text-green-400 bg-green-500/10">
+                            <CheckCircle2 className="w-4 h-4" />
+                            NO
+                          </span>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -203,11 +262,12 @@ export default function Logs() {
         {!loading && filteredLogs.length > 0 && (
           <div className="mt-6 flex items-center justify-between bg-linear-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl p-4">
             <div className="text-sm text-slate-400">
-              Showing page <span className="text-white font-semibold">{page}</span>
+              Showing page{" "}
+              <span className="text-white font-semibold">{page}</span>
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setPage(p => Math.max(1, p - 1))}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
                 className="flex items-center gap-2 px-4 py-2 bg-slate-900/50 hover:bg-slate-800 border border-slate-700/50 rounded-lg text-slate-300 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -218,7 +278,7 @@ export default function Logs() {
                 {page}
               </div>
               <button
-                onClick={() => setPage(p => p + 1)}
+                onClick={() => setPage((p) => p + 1)}
                 disabled={filteredLogs.length < limit}
                 className="flex items-center gap-2 px-4 py-2 bg-slate-900/50 hover:bg-slate-800 border border-slate-700/50 rounded-lg text-slate-300 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
