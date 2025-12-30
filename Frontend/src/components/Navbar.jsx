@@ -20,9 +20,17 @@ const Logo = ({ src }) => (
               FrostFault
             </span>
             {/* Main text with gradient */}
-            <span className="relative bg-linear-to-r from-cyan-300 via-blue-400 to-purple-500 bg-clip-text text-transparent drop-shadow-lg">
-              Frost<span className="bg-linear-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent">Fault</span>
-            </span>
+            <span className="relative inline-block frost-text">
+  <span className="bg-linear-to-r from-cyan-300 via-blue-400 to-purple-500 bg-clip-text text-transparent drop-shadow-lg">
+    Frost
+    <span className="bg-linear-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent">
+      Fault
+    </span>
+  </span>
+
+  {/* Snowfall overlay */}
+  <span className="snowfall absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+</span>
             {/* Animated underline */}
             <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
           </h1>
