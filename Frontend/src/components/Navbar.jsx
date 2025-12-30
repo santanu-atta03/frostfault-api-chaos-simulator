@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Activity, Layers, Plus, FileText, Zap } from "lucide-react";
-
+import logo from "../assets/frostfaultlogo.png"
 export default function Navbar() {
   const location = useLocation();
   
@@ -30,14 +30,14 @@ export default function Navbar() {
               <div className="relative">
                 <div className="absolute inset-0 bg-purple-500 blur-lg opacity-50 rounded-full"></div>
                 <div className="relative bg-linear-to-br from-purple-500 to-pink-500 p-1.5 sm:p-2 rounded-lg">
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={2.5} />
+                  <img src={logo} alt="logo" className="w-5 h-5 sm:w-6 sm:h-6"/>
                 </div>
               </div>
               <div>
                 <h1 className="text-lg sm:text-xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  API Chaos
+                  FrostFault
                 </h1>
-                <p className="text-xs text-slate-400 hidden sm:block">Engineering Simulator</p>
+                <p className="text-xs text-slate-400 hidden sm:block">Api Chaos Simulator</p>
               </div>
             </div>
             
