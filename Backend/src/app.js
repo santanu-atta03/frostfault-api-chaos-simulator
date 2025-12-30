@@ -11,13 +11,17 @@ const graphqlMockRoutes = require("./routes/graphqlMock.routes");
 const app = express();
 
 app.use(helmet());
+ 
 app.use(cors({
   origin: [
     "https://frostfault.xyz",
     "https://www.frostfault.xyz",
-    "https://frostfault-api-chaos-simulator.vercel.app/"
+    "https://frostfault-api-chaos-simulator.vercel.app"
   ]
 }));
+ 
+app.use(cors());
+ 
 app.use(express.json());
 app.use(morgan("dev"));
 
